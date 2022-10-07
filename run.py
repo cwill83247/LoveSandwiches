@@ -77,7 +77,21 @@ def calculate_surplus_data(sales_row):
     stock = SHEET.worksheet("stock").get_all_values()      #this gets all of the values and presents each row as a list form stock sheet, i.e headers row1 = 1 list, row 2 = another list etc...
                                            #pprint has been imported at top of .py filethis is a fancier way of displaying data
     stock_row = stock[-1]                                   # this grabs the last row from our list "stock"  which is effectivley our last row in the stock spreadsheet
-    print(f"stock row last one in sheet {stock_row}")
+    print(f"stock row last entry in sheet {stock_row}")
+    print(f"sales row last entry in sheet {sales_row}")
+
+    surplus_data =[]                                         # being used so can append value sinto a new list   
+    for sales,stock in zip(sales_row,stock_row):             #std python ZIP method  used to iterate through 2 lists.........
+        surplus = (int(stock) -sales)                       # needed to convert stock to an int  CANT takeaway a string and int....
+        # print(surplus)
+        surplus_data.append(surplus)                        # adding vaues to our empty surplus_data array/list
+        print(surplus_data)
+
+    return surplus_data                                        # have to return them      
+
+
+
+
 
 def main():
     """
@@ -87,7 +101,7 @@ def main():
     data = get_sales_data()                                 # calling function
     sales_data =[int(num) for num in data]
     update_sales_worksheet(sales_data)                      # function gets called and passes in the sales_data which needs ot be an int thats why converted above.
-    calculate_surplus_data(sales_data)                      # why am i passing in sales_data ?????
+    new_surplus_data = calculate_surplus_data(sales_data)                      # why am i passing in sales_data ?????
 
 
 print("Welcome to out love Sandwiches data process")
