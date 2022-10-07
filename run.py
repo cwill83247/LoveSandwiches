@@ -1,6 +1,6 @@
 import gspread                                                      #std for importing
 from google.oauth2.service_account import Credentials               #std for using google api    
-
+from pprint import pprint
 SCOPE = [                                                           #std defining the apis we want to use
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -68,6 +68,17 @@ def update_sales_worksheet(data):                           #function to update 
     sales_worksheet.append_row(data)                    # std  appending row in worksheet with "data" the data gets passed when it get called/invoked
     print("Sales sheet updated succesfully ")
 
+
+def calculate_surplus_data(sales_row):
+    """
+    calculating the surplus sandwiches
+    """
+    print("calculating surplus sandwiches")
+    stock = SHEET.worksheet("stock").get_all_values()      #this gets all of the values and presents each row as a list form stock sheet, i.e headers row1 = 1 list, row 2 = another list etc...
+                                           #pprint has been imported at top of .py filethis is a fancier way of displaying data
+    stock_row = stock[-1]                                   # this grabs the last row from our list "stock"  which is effectivley our last row in the stock spreadsheet
+    print(f"stock row last one in sheet {stock_row}")
+
 def main():
     """
     Standard practice to add our function calls 
@@ -76,10 +87,10 @@ def main():
     data = get_sales_data()                                 # calling function
     sales_data =[int(num) for num in data]
     update_sales_worksheet(sales_data)                      # function gets called and passes in the sales_data which needs ot be an int thats why converted above.
+    calculate_surplus_data(sales_data)                      # why am i passing in sales_data ?????
 
 
 print("Welcome to out love Sandwiches data process")
 
 
 main()                                                      #note functions need to be called after the function has been written
-
