@@ -58,15 +58,25 @@ def validate_data(values):                                    # new function for
 
     print(values)
 
-def update_sales_worksheet(data):                           #function to update worksheet
+def update_surplus_worksheet(data):                           #function to update worksheet
     """
-    function to update the sales worksheet                 
+    function to update the surplus worksheet                 
     from users input
     """
     print("updating worksheet.....")
+    surplus_worksheet = SHEET.worksheet("surplus")           # std "sales is name of worksheet in spreadsheet" GSuite GSPREAD Method being used to provide alot of the functionality
+    surplus_worksheet.append_row(data)                    # std  appending row in worksheet with "data" the data gets passed when it get called/invoked
+    print("surplus updated succesfully ")
+
+def update_sales_worksheet(data):                           #function to update worksheet
+    """
+    function to update the sales information worksheet                 
+    from users input
+    """
+    print("updating sales worksheet.....")
     sales_worksheet = SHEET.worksheet("sales")           # std "sales is name of worksheet in spreadsheet" GSuite GSPREAD Method being used to provide alot of the functionality
     sales_worksheet.append_row(data)                    # std  appending row in worksheet with "data" the data gets passed when it get called/invoked
-    print("Sales sheet updated succesfully ")
+    print("Sales sheet updated succesfully ")    
 
 
 def calculate_surplus_data(sales_row):
@@ -102,7 +112,8 @@ def main():
     sales_data =[int(num) for num in data]
     update_sales_worksheet(sales_data)                      # function gets called and passes in the sales_data which needs ot be an int thats why converted above.
     new_surplus_data = calculate_surplus_data(sales_data)                      # why am i passing in sales_data ?????
-
+    update_surplus_worksheet(new_surplus_data)
+    print(f"new surplus data {new_surplus_data}")
 
 print("Welcome to out love Sandwiches data process")
 
