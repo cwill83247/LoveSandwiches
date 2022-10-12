@@ -58,25 +58,38 @@ def validate_data(values):                                    # new function for
 
     print(values)
 
+"""   previous functions that have been refactored
 def update_surplus_worksheet(data):                           #function to update worksheet
-    """
-    function to update the surplus worksheet                 
-    from users input
-    """
+    
+    #function to update the surplus worksheet                 
+    #from users input
+    
     print("updating worksheet.....")
     surplus_worksheet = SHEET.worksheet("surplus")           # std "sales is name of worksheet in spreadsheet" GSuite GSPREAD Method being used to provide alot of the functionality
     surplus_worksheet.append_row(data)                    # std  appending row in worksheet with "data" the data gets passed when it get called/invoked
     print("surplus updated succesfully ")
 
 def update_sales_worksheet(data):                           #function to update worksheet
-    """
-    function to update the sales information worksheet                 
-    from users input
-    """
+    
+    #function to update the sales information worksheet                 
+    #from users input
+    
     print("updating sales worksheet.....")
     sales_worksheet = SHEET.worksheet("sales")           # std "sales is name of worksheet in spreadsheet" GSuite GSPREAD Method being used to provide alot of the functionality
     sales_worksheet.append_row(data)                    # std  appending row in worksheet with "data" the data gets passed when it get called/invoked
     print("Sales sheet updated succesfully ")    
+""" #end of refactoring
+
+def update_worksheet(data, worksheet):                  #this is refactoring the 2 above into one function
+    """gets figures passed to it for example sales or surplus
+    it then updates the relevant worksheet
+    """
+    print (f" Updating the worksheet: {worksheet}")
+    worksheet_to_update = SHEET.worksheet(worksheet) 
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet} updated succesfully")
+
+
 
 
 def calculate_surplus_data(sales_row):
@@ -109,10 +122,12 @@ def main():
     into a  function called main
     """
     data = get_sales_data()                                 # calling function
-    sales_data =[int(num) for num in data]
-    update_sales_worksheet(sales_data)                      # function gets called and passes in the sales_data which needs ot be an int thats why converted above.
+    sales_data =[int(num) for num in data]                  # need this new variable so can use it outside of the orignal function ??
+    #update_sales_worksheet(sales_data)                      # function gets called and passes in the sales_data which needs ot be an int thats why converted above.
+    update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus_data(sales_data)                      # why am i passing in sales_data ?????
-    update_surplus_worksheet(new_surplus_data)
+    #update_surplus_worksheet(new_surplus_data)
+    update_worksheet(new_surplus_data, "surplus")            # need this new variable so can use it outside of the orignal function ??
     print(f"new surplus data {new_surplus_data}")
 
 print("Welcome to out love Sandwiches data process")
