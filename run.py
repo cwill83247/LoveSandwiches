@@ -14,7 +14,7 @@ SHEET = GSPREAD_CLIENT.open('love_sandwichescw')                    #specific to
 
 sales = SHEET.worksheet('sales')                                    #specific to sheet in worksheet
 data = sales.get_all_values()                                       #std calling the above sales variable
-print(data)                                                         #std displaying the output
+#print(data)                                                         #std displaying the output
 
 def get_sales_data():                                               #start of function
     """
@@ -112,8 +112,20 @@ def calculate_surplus_data(sales_row):
 
     return surplus_data                                        # have to return them      
 
+def get_last_5_sales():
+    """
+    getting the last 5 sales so we can get an average
+    """
+    sales = SHEET.worksheet("sales")
+    # sales_column = sales.col.values(3)                      #this is getting the values from column 3 these start at 1, not like list index that start at 0 - so creates a list *dont forget its in a string
+    sales_columns = []
+    
+    for ind in range (1,7):                                     #1 is number it should start from and 7 is the number it should end.. this will get 6 entries
+        column = sales.col_values(ind)                # creatinga  varible to hold value(s)    sales.col_values is part of gspread method ?? unsure on why passing ind variable
+        sales_columns.append(column[-5:])           # this part is using slice column[-5:]  to get last 5 entries .. 
+    print(sales_columns)
 
-
+    return sales_columns    
 
 
 def main():
@@ -129,8 +141,10 @@ def main():
     #update_surplus_worksheet(new_surplus_data)
     update_worksheet(new_surplus_data, "surplus")            # need this new variable so can use it outside of the orignal function ??
     print(f"new surplus data {new_surplus_data}")
-
+    sales_columns = get_last_5_sales()
 print("Welcome to out love Sandwiches data process")
 
 
-main()                                                      #note functions need to be called after the function has been written
+#main()                                                      #note functions need to be called after the function has been written
+
+get_last_5_sales()
