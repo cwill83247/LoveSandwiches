@@ -127,6 +127,22 @@ def get_last_5_sales():
 
     return sales_columns    
 
+def calculate_stock_req(data):
+    """
+    used to calculate stock base don previous 5 days
+    of sales
+    """
+    print("calculating stock data")
+    new_stock_data = []                                     #empty array/list to hold the values
+
+    for column in data:
+        int_column = [int(num) for num in column]
+        average = sum(int_column) / len(int_column)
+        stock_num = average * 1.1
+        new_stock_data.append(round(stock_num))
+
+    return new_stock_data    
+
 
 def main():
     """
@@ -142,9 +158,12 @@ def main():
     update_worksheet(new_surplus_data, "surplus")            # need this new variable so can use it outside of the orignal function ??
     print(f"new surplus data {new_surplus_data}")
     sales_columns = get_last_5_sales()
+    stock_data = calculate_stock_req(sales_columns)         # when we call function we are passing in "sales_columns" result above.. 
+    print(stock_data)
+    update_worksheet(stock_data, "stock")   
 print("Welcome to out love Sandwiches data process")
 
 
-#main()                                                      #note functions need to be called after the function has been written
+main()                                                      #note functions need to be called after the function has been written
 
-get_last_5_sales()
+#get_last_5_sales()
