@@ -127,7 +127,7 @@ def get_last_5_sales():
 
     return sales_columns    
 
-def calculate_stock_req(data):
+def calculate_stock_req(chris):                    # typically (chris) would be (data) as more of a standard changed just to undertsand its relationship its effectivley a placeholder for some data
     """
     used to calculate stock base don previous 5 days
     of sales
@@ -135,13 +135,13 @@ def calculate_stock_req(data):
     print("calculating stock data")
     new_stock_data = []                                     #empty array/list to hold the values
 
-    for column in data:
-        int_column = [int(num) for num in column]
+    for column in chris:                                    # for each column in our data ----  that we supply when we call function we pass in "sales_columns" data which is last 5 sales lists for loop iterates through    
+        int_column = [int(num) for num in column]           # std appart form making num and integer so we can calculate ??? bit lost here
         average = sum(int_column) / len(int_column)
         stock_num = average * 1.1
-        new_stock_data.append(round(stock_num))
+        new_stock_data.append(round(stock_num))             #adding calculated average stock number to the Array and also rounding that number to a whole number 
 
-    return new_stock_data    
+    return new_stock_data                               
 
 
 def main():
